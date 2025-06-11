@@ -1,0 +1,34 @@
+﻿name: Continuous Integration
+
+# Trigger the workflow on push to the 'main' branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest  # The environment to run this job
+
+    steps:
+      # Step 1: Checkout the source code from the repo
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up the required version of .NET (or any other environment)
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x  # Specify your .NET version
+
+      # Step 3: Restore dependencies
+      - name: Restore dependencies
+        run: dotnet restore
+
+      # Step 4: Build the application
+      - name: Build project
+        run: dotnet build --no-restore
+
+      # Step 5: Run unit tests
+      - name: Run tests
+        run: dotnet test --no-build --verbosity normal
