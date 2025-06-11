@@ -1,6 +1,6 @@
 name: Continuous Integration
 
-# Trigger the workflow on push to the 'main' branch
+# Trigger the workflow on push to the 'master' branch
 on:
   push:
     branches:
@@ -33,11 +33,13 @@ jobs:
       - name: Run tests
         run: dotnet test -c Release --no-build
 
+      # Step 6: Publish
       - name: Publish
         run: dotnet publish -c Release -r win-x64 --output ./publish
 
+      # ✅ Step 7: Upload Artifact (fixed)
       - name: Upload Artifact
-      - uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
           name: app-publish
           path: ./publish
