@@ -1,4 +1,4 @@
-﻿name: Continuous Integration
+name: Continuous Integration
 
 # Trigger the workflow on push to the 'main' branch
 on:
