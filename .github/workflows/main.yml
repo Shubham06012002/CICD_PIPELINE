@@ -27,8 +27,17 @@ jobs:
 
       # Step 4: Build the application
       - name: Build project
-        run: dotnet build --no-restore
+        run: dotnet build -c Release --no-restore
 
       # Step 5: Run unit tests
       - name: Run tests
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test -c Release --no-build
+
+      - name: Publish
+        run: dotnet publish -c Release -r win-x64 --output ./publish
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-publish
+          path: ./publish
